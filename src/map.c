@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 14:52:26 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/04 17:23:01 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:26:06 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,37 @@
 void map_parsing(int file_fd, t_info *info)
 {
 	char *tmp_map;
-    char *tmp;
 	char *buffer;
+	char *tmp;
 
+	tmp_map = NULL;
 	while (1)
 	{
 		buffer = get_next_line(file_fd);
 		if (!buffer)
 			break ;
-        tmp = tmp_map;
-		tmp_map = ft_strjoin(tmp_map, buffer); // leak
+		tmp = tmp_map;
+		if (tmp_map == NULL)
+			tmp_map = ft_strdup(buffer);
+		else
+			tmp_map = ft_strjoin(tmp_map, buffer);
+		free(tmp);
 		free(buffer);
-       // free(tmp);
 	}
 	info->map = ft_split(tmp_map, '\n'); 
+	free(tmp_map);
     if (!info->map)
-    {
-        ft_printf("Map is not initialized");
-        exit(EXIT_FAILURE);
-    }
+		error("Map is not initialized", info);
 	close(file_fd);
+}
+
+void map_checks(t_info *info)
+{
+	letter_checks(info);
+	size_checks(info);
+	border_checks(info);
+	player_pos(info);
+	check_path(info);
 }
 
 void letter_checks(t_info *info)
@@ -43,7 +54,6 @@ void letter_checks(t_info *info)
     int j;
 
     i = 0;
-    
 	while (info->map[i])
 	{
         j = 0;
@@ -51,19 +61,16 @@ void letter_checks(t_info *info)
         {
             if (info->map[i][j] == 'E')
                 info->exit++;
-            else if (info->map[i][j] == 'S')
-                info->start++;
+            else if (info->map[i][j] == 'P')
+				info->start++;
             else if (info->map[i][j] == 'C')
                 info->collectible++;
-            j++; // proverit' na chto libo krome etih bukv
+			if (!ft_strchr("01CEP\n", info->map[i][j]))
+				error("letter_checks: Map is not valid", info);
+            j++;
         }
 		i++;
-	}
-	
-	// ft_printf("exit: %i\n", info->exit);
-	// ft_printf("start: %i\n", info->start);
-	// ft_printf("collectible: %i\n", info->collectible);
-	
+	}	
 	if (info->exit != 1 || info->start != 1 || info->collectible < 1)
 		error("letter_checks: Map is not valid", info);
 }
@@ -84,7 +91,27 @@ void size_checks(t_info *info)
 	// ft_printf("width: %d\n", info->width);
 	// ft_printf("height: %d\n", info->height);
 	
-	if (info->height <= 2 || info->width <= 2 || info->height == info->width)
+	if (info->height <= 2 || info->width <= 2)
 		error("size_checks: Map is not valid", info);
+}
+
+void border_checks(t_info *info)
+{
+	int i = 0;
+	int j;
+
+	while (i < info->width)
+	{
+		if (info->map[0][i] != '1' || info->map[info->height - 1][i] != '1')
+			error("border_checks: Map must be surrounded by walls\n", info);
+		i++;
+	}
+	j = 1;
+	while (j < info->height - 1)
+	{
+		if (info->map[j][0] != '1' || info->map[j][info->width - 1] != '1')
+			error("border_checks: Map must be surrounded by walls\n", info);
+		j++;
+	}
 }
 

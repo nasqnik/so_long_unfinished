@@ -5,7 +5,7 @@ RM 			= rm -rf
 NAME 		= so_long
 HEADER 		= so_long.h
 
-SRC			= src/main.c src/map.c src/utils.c
+SRC			= src/main.c src/map.c src/utils.c src/map_check_path.c src/map_flood_fill.c
 OBJ			= $(SRC:%.c=%.o)
 
 LIBFT		=	lib/libft/libft.a
