@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:24:54 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/14 18:24:48 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:28:46 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char **map_copy(t_info *info)
     return (copy);
 }
 
-void player_pos(t_info *info)
+void player_pos(t_info *info, int flag)
 {
     int i;
     int j;
@@ -64,8 +64,11 @@ void player_pos(t_info *info)
         {
             if (info->map[i][j] == 'P')
             {
-                info->start_coordinates = (t_point){j, i};
-                //printf("x: %d, y: %d\n", info->start_coordinates.x, info->start_coordinates.y);
+                if (flag)
+                    info->start_coordinates = (t_point){j, i};
+                info->player.coordinates = (t_point){j * DIM, i * DIM};
+                // printf("x: %d, y: %d\n", info->start_coordinates.x, info->start_coordinates.y);
+                // printf("x: %d, y: %d\n", info->player.coordinates.x, info->player.coordinates.y);
             }
             j++;
         }

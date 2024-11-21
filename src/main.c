@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:16:10 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/14 17:49:42 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:16:13 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 void initialize(t_info *info)
 {
+	info->mlx = NULL;
+	info->win.x = 0;
+	info->win.y = 0;
+	info->win.mlx_win = NULL; 
+	info->player.coordinates = (t_point){0, 0};
+	info->player.collected = 0;
+	info->player.dir = 's';
+	info->player.moves = 0;
+	initialize_images(info);
 	info->map = NULL;
 	info->start = 0;
 	info->start_coordinates = (t_point){0, 0};
 	info->exit = 0;
+	info->exit_condition = 0;
 	info->collectible = 0; 
 	info->width = 0;
 	info->height = 0;
@@ -60,7 +70,12 @@ int main(int argc, char **argv)
 	initialize(&info);
 	map_parsing(file, &info);
 	map_checks(&info);
+	// printf("%d\n", info.height);
+	start_game(&info);
+	mlx_hook(info.win.mlx_win, 17, 0L, quit_game, &info);
+	mlx_key_hook(info.win.mlx_win, move_keys, &info);
 
+	mlx_loop(info.mlx);
 	free_array(info.map);
 	
 }
