@@ -11,11 +11,24 @@ SRC			= src/main.c src/map_parsing.c src/utils.c src/map_check_path.c \
 			
 OBJ			= $(SRC:%.c=%.o)
 
+
+BONUS		= so_long
+BONUS_H		= bonus_so_long.h 
+
+BONUS_SRC	= bonus/main.c bonus/utils.c bonus/image.c bonus/map_check_path.c \
+			bonus/map_parsing.c bonus/enemies.c bonus/map_flood_fill.c bonus/game.c \
+			bonus/map_build.c bonus/move.c
+
+BONUS_OBJ = $(BONUS_SRC:.c=.o)
+
 LIBFT		=	lib/libft/libft.a
 FT_PRINTF	=	lib/ft_printf/libftprintf.a
 MLX			=	mlx/libmlx.a
 
 all:		libft ft_printf $(NAME)
+
+bonus:		libft ft_printf $(BONUS_OBJ)
+			$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(FT_PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(BONUS)
 
 $(NAME):	$(OBJ) $(MLX) 
 			$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(FT_PRINTF) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
@@ -33,24 +46,16 @@ $(MLX):
 			@$(MAKE) -C mlx/
 
 clean:
-			@$(RM) $(OBJ)
+			@$(RM) $(OBJ) $(BONUS_OBJ)
 			@$(MAKE) -C lib/libft/ clean
 			@$(MAKE) -C lib/ft_printf/ clean
 
 fclean:		clean
 			@$(MAKE) -C lib/libft/ fclean
 			@$(MAKE) -C lib/ft_printf/ fclean
-			@$(RM) $(NAME)
+			@$(RM) $(NAME) $(BONUS)
 
 re:			fclean all
 
-.PHONY:		all	clean fclean re libft ft_printf
+.PHONY:		all	clean fclean re libft ft_printf bonus
 
-
-# BONUS		= 
-# BONUS_H	= 
-# BONUS_SRC	= 
-# BONUS_OBJ = $(BONUS_SRC:.c=.o)
-
-# bonus:	libft ft_printf $(BONUS_OBJ)
-# 			$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT) $(FT_PRINTF) -o $(BONUS)

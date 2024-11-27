@@ -1,16 +1,16 @@
 /* ************************************************************************** */
-/*	                                                                        */
+/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   map_check_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:24:54 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:04:37 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:42:29 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "bonus_so_long.h"
 
 void	check_path(t_info *info)
 {
@@ -22,7 +22,7 @@ void	check_path(t_info *info)
 	size = (t_point){info->width, info->height};
 	start = info->start_coordinates;
 	counter = 1;
-	while (counter < 3)
+	while (counter < 4)
 	{
 		area_check = map_copy(info);
 		flood_fill_manager(area_check, size, start, counter);
@@ -50,6 +50,34 @@ char	**map_copy(t_info *info)
 	return (copy);
 }
 
+void	check_filled(t_info *info, char **area, int counter)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (area[i])
+	{
+		j = 0;
+		while (area[i][j])
+		{
+			if ((counter == 1 || counter == 3) && (area[i][j] == 'E'
+				|| area[i][j] == 'P' || area[i][j] == 'C'))
+			{
+				free_array(area);
+				error("check_filled: Map is not valid", info);
+			}
+			else if (counter == 2 && (area[i][j] == 'P' || area[i][j] == 'C'))
+			{
+				free_array(area);
+				error("check_filled: Map is not valid", info);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	player_pos(t_info *info, int flag)
 {
 	int	i;
@@ -66,34 +94,6 @@ void	player_pos(t_info *info, int flag)
 				if (flag)
 					info->start_coordinates = (t_point){j, i};
 				info->player.coordinates = (t_point){j * DIM, i * DIM};
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void	check_filled(t_info *info, char **area, int counter)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (area[i])
-	{
-		j = 0;
-		while (area[i][j])
-		{
-			if (counter == 1 && (area[i][j] == 'E'
-				|| area[i][j] == 'P' || area[i][j] == 'C'))
-			{
-				free_array(area);
-				error("letter_checks: Map is not valid", info);
-			}
-			else if (counter == 2 && (area[i][j] == 'P' || area[i][j] == 'C'))
-			{
-				free_array(area);
-				error("letter_checks: Map is not valid", info);
 			}
 			j++;
 		}

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 13:16:10 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:01:50 by anikitin         ###   ########.fr       */
+/*   Created: 2024/11/25 13:59:32 by anikitin          #+#    #+#             */
+/*   Updated: 2024/11/27 14:38:03 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "bonus_so_long.h"
 
 void	initialize(t_info *info)
 {
@@ -27,8 +27,8 @@ void	initialize(t_info *info)
 	info->start = 0;
 	info->start_coordinates = (t_point){0, 0};
 	info->exit = 0;
-	info->exit_condition = 0;
 	info->collectible = 0;
+	info->enemies = 0;
 	info->width = 0;
 	info->height = 0;
 }
@@ -72,6 +72,7 @@ int	main(int argc, char **argv)
 	map_checks(&info);
 	start_game(&info);
 	mlx_hook(info.win.mlx_win, 17, 0L, quit_game, &info);
+	mlx_loop_hook(info.mlx, animation, &info);
 	mlx_key_hook(info.win.mlx_win, move_keys, &info);
 	mlx_loop(info.mlx);
 	free_array(info.map);

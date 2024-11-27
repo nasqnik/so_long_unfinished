@@ -1,16 +1,16 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                        */
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 18:29:45 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:00:56 by anikitin         ###   ########.fr       */
+/*   Created: 2024/11/25 14:36:44 by anikitin          #+#    #+#             */
+/*   Updated: 2024/11/27 13:58:59 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "bonus_so_long.h"
 
 void	initialize_images(t_info *info)
 {
@@ -50,9 +50,9 @@ void	load_images(t_info *info)
 			address = "images/collectible.xpm";
 		else if (i == 7)
 			address = "images/path.xpm";
-		info->images[i].img = mlx_xpm_file_to_image(info->mlx, address,
-				&info->images[i].img_width, &info->images[i].img_height);
-		i++;
+		info->images[i].img = mlx_xpm_file_to_image(info->mlx,
+			address, &info->images[i].img_width, &info->images[i].img_height);
+		//i++;
 	}
 }
 

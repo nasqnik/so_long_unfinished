@@ -1,16 +1,16 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*	                                                                          */
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 14:52:26 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:09:12 by anikitin         ###   ########.fr       */
+/*   Created: 2024/11/25 14:39:09 by anikitin          #+#    #+#             */
+/*   Updated: 2024/11/27 14:44:45 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "bonus_so_long.h"
 
 void	map_parsing(int file_fd, t_info *info)
 {
@@ -65,7 +65,9 @@ void	letter_checks(t_info *info)
 				info->start++;
 			else if (info->map[i][j] == 'C')
 				info->collectible++;
-			if (!ft_strchr("01CEP\n", info->map[i][j]))
+			else if (info->map[i][j] == 'N')
+				info->enemies++;
+			if (!ft_strchr("01CEPN\n", info->map[i][j]))
 				error("letter_checks: Map is not valid", info);
 			j++;
 		}
@@ -100,14 +102,14 @@ void	border_checks(t_info *info)
 	while (i < info->width)
 	{
 		if (info->map[0][i] != '1' || info->map[info->height - 1][i] != '1')
-			error("border_checks: Map must be surrounded by walls\n", info);
+			error("border_checks: Map must be surrounded by walls", info);
 		i++;
 	}
 	j = 1;
 	while (j < info->height - 1)
 	{
 		if (info->map[j][0] != '1' || info->map[j][info->width - 1] != '1')
-			error("border_checks: Map must be surrounded by walls\n", info);
+			error("border_checks: Map must be surrounded by walls", info);
 		j++;
 	}
 }
