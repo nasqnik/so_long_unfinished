@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:29:45 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:00:56 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:50:12 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	load_images(t_info *info)
 	char	*address;
 
 	i = 0;
-	while (i < IMAGE_COUNTER)
+	while (i < IMAGE_COUNTER - 1)
 	{
 		if (i == 0)
 			address = "images/char_front.xpm";
@@ -43,13 +43,11 @@ void	load_images(t_info *info)
 		else if (i == 3)
 			address = "images/char_back.xpm";
 		else if (i == 4)
-			address = "images/door.xpm";
+			address = "images/door_open.xpm";
 		else if (i == 5)
 			address = "images/grass.xpm";
 		else if (i == 6)
 			address = "images/collectible.xpm";
-		else if (i == 7)
-			address = "images/path.xpm";
 		info->images[i].img = mlx_xpm_file_to_image(info->mlx, address,
 				&info->images[i].img_width, &info->images[i].img_height);
 		i++;
@@ -62,7 +60,7 @@ void	image_checker(t_info *info)
 	{
 		mlx_destroy_window(info->mlx, info->win.mlx_win);
 		destroy_images(info);
-		error("image_checker: one of the images is invalid\n", info);
+		error("image_checker: one of the images is invalid", info);
 	}
 }
 

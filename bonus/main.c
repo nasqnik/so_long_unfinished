@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:59:32 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 14:38:03 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/29 12:43:40 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,23 @@ int	open_checks(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf("Correct usage: ./so_long map.ber\n");
+		ft_printf("Error\nCorrect usage: ./so_long maps/map.ber\n");
 		exit(EXIT_FAILURE);
 	}
 	if (ft_strrncmp(argv[1], ".ber", 4) != 0)
 	{
-		ft_printf("Invalid file type: .ber expected\n");
+		ft_printf("Error\nInvalid file type: .ber expected\n");
 		exit(EXIT_FAILURE);
 	}
 	if (access(argv[1], R_OK) == -1)
 	{
-		ft_printf("Error accessing file\n");
+		ft_printf("Error\nError accessing file\n");
 		exit(EXIT_FAILURE);
 	}
 	file = open(argv[1], O_RDONLY);
 	if (file == -1)
 	{
-		ft_printf("Error opening file\n");
+		ft_printf("Error\nError opening file\n");
 		exit(EXIT_FAILURE);
 	}
 	return (file);

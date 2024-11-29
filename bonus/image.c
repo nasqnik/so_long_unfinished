@@ -29,30 +29,28 @@ void	initialize_images(t_info *info)
 void	load_images(t_info *info)
 {
 	int		i;
-	char	*address;
+	char	*a;
 
 	i = 0;
-	while (i < IMAGE_COUNTER)
+	while (i < 7)
 	{
 		if (i == 0)
-			address = "images/char_front.xpm";
+			a = "images/char_front.xpm";
 		else if (i == 1)
-			address = "images/char_right.xpm";
+			a = "images/char_right.xpm";
 		else if (i == 2)
-			address = "images/char_left.xpm";
+			a = "images/char_left.xpm";
 		else if (i == 3)
-			address = "images/char_back.xpm";
+			a = "images/char_back.xpm";
 		else if (i == 4)
-			address = "images/door.xpm";
+			a = "images/door_closed.xpm";
 		else if (i == 5)
-			address = "images/grass.xpm";
+			a = "images/grass.xpm";
 		else if (i == 6)
-			address = "images/collectible.xpm";
-		else if (i == 7)
-			address = "images/path.xpm";
+			a = "images/collectible.xpm";
 		info->images[i].img = mlx_xpm_file_to_image(info->mlx,
-			address, &info->images[i].img_width, &info->images[i].img_height);
-		//i++;
+				a, &info->images[i].img_width, &info->images[i].img_height);
+		i++;
 	}
 }
 
@@ -62,7 +60,7 @@ void	image_checker(t_info *info)
 	{
 		mlx_destroy_window(info->mlx, info->win.mlx_win);
 		destroy_images(info);
-		error("image_checker: one of the images is invalid\n", info);
+		error("image_checker: one of the images is invalid", info);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 14:02:48 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 14:10:35 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:13:02 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@ void	start_game(t_info *info)
 	if (!info->mlx)
 		error("mlx_init failed in start_game", info);
 	info->win.mlx_win = mlx_new_window(info->mlx,
-			info->win.x, info->win.y, "so_long"); // should we check for the error?
+			info->win.x, info->win.y, "so_long");
+	if (!info->win.mlx_win)
+		error("mlx_new_window failed in start_game", info);
 	load_images(info);
+	load_last_image(info);
 	image_checker(info);
 	put_background(info);
 	put_all_images(info);

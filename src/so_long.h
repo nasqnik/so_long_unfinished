@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:26:04 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:13:40 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:11:15 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h> 
-# include <stdio.h> // printf!!!!!
 
 # define DIM 48
 # define IMAGE_COUNTER 8
@@ -113,6 +112,7 @@ void	flood_fill_exit(char **area, t_point size, t_point start, char to_fill);
 void	free_array(char **array);
 void	error(char *msg, t_info *info);
 int		ft_strrncmp(char *str1, char *str2, int n);
+void	load_last_image(t_info *info);
 
 //game.c
 void	start_game(t_info *info);

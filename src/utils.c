@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 16:46:55 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 15:14:47 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:12:42 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,13 @@ int	ft_strrncmp(char *str1, char *str2, int n)
 		n--;
 	}
 	return (0);
+}
+
+void	load_last_image(t_info *info)
+{
+	char	*address;
+
+	address = "images/path.xpm";
+	info->images[7].img = mlx_xpm_file_to_image(info->mlx, address,
+			&info->images[7].img_width, &info->images[7].img_height);
 }

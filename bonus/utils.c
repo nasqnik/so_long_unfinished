@@ -6,7 +6,7 @@
 /*   By: anikitin <anikitin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:16:48 by anikitin          #+#    #+#             */
-/*   Updated: 2024/11/27 14:49:24 by anikitin         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:01:20 by anikitin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,26 @@ void	put_moves_on_screen(t_info *info)
 	str = ft_strjoin("moves: ", moves);
 	mlx_string_put(info->mlx, info->win.mlx_win, 42, 22, 0xFFFFFF, str);
 	free(str);
+}
+
+int	image_code(char cell, char dir)
+{
+	if (cell == 'P')
+	{
+		if (dir == 'f')
+			return (0);
+		else if (dir == 'l')
+			return (2);
+		else if (dir == 'r')
+			return (1);
+		else if (dir == 'b')
+			return (3);
+	}
+	else if (cell == 'E')
+		return (4);
+	else if (cell == 'N')
+		return (8);
+	else if (cell == 'C')
+		return (6);
+	return (-1);
 }

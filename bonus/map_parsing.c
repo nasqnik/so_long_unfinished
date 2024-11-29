@@ -89,7 +89,8 @@ void	size_checks(t_info *info)
 			error("size_checks: Map is not valid", info);
 		info->height++;
 	}
-	if (info->height <= 2 || info->width <= 2)
+	if (info->height <= 2 || info->height > 29
+		|| info->width <= 2 || info->width > 53)
 		error("size_checks: Map is not valid", info);
 }
 
